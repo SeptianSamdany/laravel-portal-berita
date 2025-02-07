@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ArticleNews extends Model
 {
@@ -20,6 +21,12 @@ class ArticleNews extends Model
         'author_id', 
         'is_featured'
     ]; 
+
+    public function SetNameAttribute($value)
+    {
+        $this->attributes['name'] = $value; 
+        $this->attributes['slug'] = Str::slug($value); 
+    }
 
     public function category(): BelongsTo
     {

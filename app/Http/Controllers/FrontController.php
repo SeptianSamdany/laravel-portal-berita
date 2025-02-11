@@ -29,7 +29,7 @@ class FrontController extends Controller
         $authors = Author::all(); 
 
         $bannerads = BannerAdvertisement::where('is_active', 'active')
-        ->where('type'. 'banner')
+        ->where('type', 'banner')
         ->inRandomOrder()
         // ->take(1)
         ->first(); 
@@ -63,5 +63,39 @@ class FrontController extends Controller
         ->first(); 
 
         return view('front.category', compact('category', 'categories', 'bannerads')); 
+    }
+
+    public function author(Author $author) 
+    {
+        $authors = Author::all();
+
+        $categories = Category::all(); 
+
+        $bannerads = BannerAdvertisement::where('is_active', 'active')
+        ->where('type'. 'banner')
+        ->inRandomOrder()
+        ->first(); 
+
+        return view('front.author', compact('author', 'authors', 'categories', 'bannerads'));
+    }
+
+    public function search(Request $request)
+    {
+        $request->validate([
+            'keyword' => ['required', 'string', 'max:255'],
+        ]);
+
+        $categories = Category::all();
+
+        $keyword = $request->keyword;
+
+        $articles = ArticleNews::with(['category', 'author'])
+        ->where('name', 'like', '%' . $keyword . '%')->paginate(6);
+
+        return view('front.search', compact('keyword', 'articles', 'categories'));
+    }
+
+    public function details(ArticleNews $articleNews) {
+        return view('front.details', compact('articleNews'));
     }
 }

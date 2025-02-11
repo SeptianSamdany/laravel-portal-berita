@@ -1,38 +1,7 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link href="{{ asset('output.css') }}" rel="stylesheet" />
-		<link href="{{ asset('main.css') }}" rel="stylesheet" />
-		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-		<!-- CSS -->
-		<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css" />
-	</head>
+@extends('front.master')
+@section('content')
 	<body class="font-[Poppins] pb-[72px]">
-		<nav id="Navbar" class="max-w-[1130px] mx-auto flex justify-between items-center mt-[30px]">
-			<div class="logo-container flex gap-[30px] items-center">
-				<a href="index.html" class="flex shrink-0">
-					<img src="assets/images/logos/logo.svg" alt="logo" />
-				</a>
-				<div class="h-12 border border-[#E8EBF4]"></div>
-				<form action="searchPage.html" class="w-[450px] flex items-center rounded-full border border-[#E8EBF4] p-[12px_20px] gap-[10px] focus-within:ring-2 focus-within:ring-[#FF6B18] transition-all duration-300">
-					<button type="submit" class="w-5 h-5 flex shrink-0">
-						<img src="assets/images/icons/search-normal.svg" alt="icon" />
-					</button>
-					<input type="text" name="" id="" class="appearance-none outline-none w-full font-semibold placeholder:font-normal placeholder:text-[#A3A6AE]" placeholder="Search hot trendy news today..." />
-				</form>
-			</div>
-			<div class="flex items-center gap-3">
-				<a href="" class="rounded-full p-[12px_22px] flex gap-[10px] font-semibold transition-all duration-300 border border-[#EEF0F7] hover:ring-2 hover:ring-[#FF6B18]">Upgrade Pro</a>
-				<a href="" class="rounded-full p-[12px_22px] flex gap-[10px] font-bold transition-all duration-300 bg-[#FF6B18] text-white hover:shadow-[0_10px_20px_0_#FF6B1880]">
-					<div class="w-6 h-6 flex shrink-0">
-						<img src="assets/images/icons/favorite-chart.svg" alt="icon" />
-					</div>
-					<span>Post Ads</span>
-				</a>
-			</div>
-		</nav>
+		<x-navbar />
 		<nav id="Category" class="max-w-[1130px] mx-auto flex justify-center items-center gap-4 mt-[30px]">
 
             @foreach ($categories as $category)
@@ -132,11 +101,15 @@
 		</section>
 		<section id="Advertisement" class="max-w-[1130px] mx-auto flex justify-center mt-[70px]">
 			<div class="flex flex-col gap-3 shrink-0 w-fit">
-				<a href="{{ $bannerads->link }}">
-					<div class="w-[900px] h-[120px] flex shrink-0 border border-[#EEF0F7] rounded-2xl overflow-hidden">
-						<img src="{{ Storage::url($bannerads->thumbnail) }}" class="object-cover w-full h-full" alt="ads" />
-					</div>
-				</a>
+				@if($bannerads)
+					<a href="{{ $bannerads->link }}">
+						<div class="w-[900px] h-[120px] flex shrink-0 border border-[#EEF0F7] rounded-2xl overflow-hidden">
+							<img src="{{ Storage::url($bannerads->thumbnail) }}" class="object-cover w-full h-full" alt="ads" />
+						</div>
+					</a>
+				@else
+					<p>No advertisement available.</p>
+				@endif
 				<p class="font-medium text-sm leading-[21px] text-[#A3A6AE] flex gap-1">
 					Our Advertisement <a href="#" class="w-[18px] h-[18px]"><img src="assets/images/icons/message-question.svg" alt="icon" /></a>
 				</p>
@@ -151,17 +124,21 @@
 				<a href="categoryPage.html" class="rounded-full p-[12px_22px] flex gap-[10px] font-semibold transition-all duration-300 border border-[#EEF0F7] hover:ring-2 hover:ring-[#FF6B18]">Explore All</a>
 			</div>
 			<div class="flex justify-between items-center h-fit">
-				<div class="featured-news-card relative w-full h-[424px] flex flex-1 rounded-[20px] overflow-hidden">
-					<img src="{{ Storage::url($entertainment_featured_articles->thumbnail) }}" class="thumbnail absolute w-full h-full object-cover" alt="icon" />
-					<div class="w-full h-full bg-gradient-to-b from-[rgba(0,0,0,0)] to-[rgba(0,0,0,0.9)] absolute z-10"></div>
-					<div class="card-detail w-full flex items-end p-[30px] relative z-20">
-						<div class="flex flex-col gap-[10px]">
-							<p class="text-white">Featured</p>
-							<a href="details.html" class="font-bold text-[30px] leading-[36px] text-white hover:underline transition-all duration-300">{{ $entertainment_featured_articles->name }}</a>
-							<p class="text-white">{{ $entertainment_featured_articles->created_at->format('M d, Y') }}</p>
+				@if($entertainment_featured_articles)
+					<div class="featured-news-card relative w-full h-[424px] flex flex-1 rounded-[20px] overflow-hidden">
+						<img src="{{ Storage::url($entertainment_featured_articles->thumbnail) }}" class="thumbnail absolute w-full h-full object-cover" alt="icon" />
+						<div class="w-full h-full bg-gradient-to-b from-[rgba(0,0,0,0)] to-[rgba(0,0,0,0.9)] absolute z-10"></div>
+						<div class="card-detail w-full flex items-end p-[30px] relative z-20">
+							<div class="flex flex-col gap-[10px]">
+								<p class="text-white">Featured</p>
+								<a href="{{ route('front.details', $entertainment_featured_articles->slug) }}" class="font-bold text-[30px] leading-[36px] text-white hover:underline transition-all duration-300">{{ $entertainment_featured_articles->name }}</a>
+								<p class="text-white">{{ $entertainment_featured_articles->created_at->format('M d, Y') }}</p>
+							</div>
 						</div>
 					</div>
-				</div>
+				@else
+					<p>No featured entertainment article available.</p>
+				@endif
 				<div class="h-[424px] w-fit px-5 overflow-y-scroll overflow-x-hidden relative custom-scrollbar">
 					<div class="w-[455px] flex flex-col gap-5 shrink-0">
 
@@ -372,11 +349,16 @@
 				</div>
 			</div>
 		</section>
-
-		<script src="{{ asset('customjs/two-lines-text.js') }}"></script>
-		<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-		<!-- JavaScript -->
-		<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
-		<script src="{{ asset('customjs/carousel.js') }}"></script>
 	</body>
-</html>
+@endsection
+@push('after-styles')
+	<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css" />
+@endpush
+
+@push('after-script')
+	<script src="{{ asset('customjs/two-lines-text.js') }}"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<!-- JavaScript -->
+	<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+	<script src="{{ asset('customjs/carousel.js') }}"></script>
+@endpush

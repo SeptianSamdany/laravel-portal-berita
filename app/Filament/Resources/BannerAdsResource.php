@@ -9,6 +9,7 @@ use App\Models\BannerAdvertisement;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -29,7 +30,7 @@ class BannerAdsResource extends Resource
     {
         return $form
             ->schema([
-                TextColumn::make('link')
+                TextInput::make('link')
                 ->activeUrl()
                 ->required()
                 ->maxLength(255),
@@ -58,18 +59,18 @@ class BannerAdsResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                TextColumn::make('link')
+        ->columns([
+            TextColumn::make('link')
                 ->searchable(),
-                
-                TextColumn::make('is_active')
+
+            TextColumn::make('is_active')
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {
                     'active' => 'success', 
                     'not_active' => 'danger', 
-                }), 
+                }),
 
-                ImageColumn::make('thumbnail')->getStateUsing(fn ($record) => asset('storage/' . $record->thumbnail)), 
+            ImageColumn::make('thumbnail')->getStateUsing(fn ($record) => asset('storage/' . $record->thumbnail)),
             ])
             ->filters([
                 //

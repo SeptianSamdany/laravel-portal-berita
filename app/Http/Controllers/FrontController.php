@@ -34,53 +34,53 @@ class FrontController extends Controller
         // ->take(1)
         ->first(); 
 
-        $entertainment_articles = ArticleNews::whereHas('category', function ($query) {
-            $query->where('name', 'Entertainment'); 
+        $politik_articles = ArticleNews::whereHas('category', function ($query) {
+            $query->where('name', 'Politik'); 
         })
         ->where('is_featured', 'not_featured')
         ->latest()
         ->take(6)
         ->get();
 
-        $entertainment_featured_articles = ArticleNews::whereHas('category', function ($query) {
-            $query->where('name', 'Entertainment'); 
+        $politik_featured_articles = ArticleNews::whereHas('category', function ($query) {
+            $query->where('name', 'Politik'); 
         })
         ->where('is_featured', 'featured')
         ->inRandomOrder()
         ->first();
 
-        $business_articles = ArticleNews::whereHas('category', function ($query) {
-            $query->where('name', 'Business'); 
+        $teknologi_articles = ArticleNews::whereHas('category', function ($query) {
+            $query->where('name', 'Teknologi'); 
         })
         ->where('is_featured', 'not_featured')
         ->latest()
         ->take(6)
         ->get(); 
 
-        $business_featured_articles = ArticleNews::whereHas('category', function ($query) {
-            $query->where('name', 'Business'); 
+        $teknologi_featured_articles = ArticleNews::whereHas('category', function ($query) {
+            $query->where('name', 'Teknologi'); 
         })
         ->where('is_featured', 'featured')
         ->inRandomOrder()
         ->first();
 
-        $automotive_articles = ArticleNews::whereHas('category', function ($query) {
-            $query->where('name', 'Automotive'); 
+        $kesehatan_articles = ArticleNews::whereHas('category', function ($query) {
+            $query->where('name', 'Kesehatan'); 
         })
         ->where('is_featured', 'not_featured')
         ->latest()
         ->take(6)
         ->get(); 
 
-        $automotive_featured_articles = ArticleNews::whereHas('category', function ($query) {
-            $query->where('name', 'Automotive'); 
+        $kesehatan_featured_articles = ArticleNews::whereHas('category', function ($query) {
+            $query->where('name', 'Kesehatan'); 
         })
         ->where('is_featured', 'featured')
         ->inrandomOrder()
         ->first();
 
-        return view('front.index', compact('entertainment_featured_articles','entertainment_articles', 'categories', 'articles', 'authors', 
-        'featured_articles', 'bannerads', 'business_articles', 'business_featured_articles', 'automotive_articles', 'automotive_featured_articles')); 
+        return view('front.index', compact('politik_featured_articles','politik_articles', 'categories', 'articles', 'authors', 
+        'featured_articles', 'bannerads', 'kesehatan_articles', 'kesehatan_featured_articles', 'teknologi_articles', 'teknologi_featured_articles')); 
     }
 
     public function category(Category $category)
@@ -145,7 +145,7 @@ class FrontController extends Controller
         ->inRandomOrder()
         ->first();
 
-        $bannerads_square = BannerAdvertisement::where('type', 'banner')
+        $bannerads_square = BannerAdvertisement::where('type', 'square')
         ->where('is_active', 'active')
         ->inRandomOrder()
         ->take(2)
@@ -164,6 +164,6 @@ class FrontController extends Controller
         ->latest()
         ->get();
 
-        return view('front.details', compact('articleNews', 'categories', 'bannerads', 'articles', 'bannerads_square_1', 'bannerads_square_2'));
+        return view('front.details', compact('articleNews', 'categories', 'bannerads', 'articles', 'bannerads_square_1', 'bannerads_square_2', 'author_news'));
     }
 }

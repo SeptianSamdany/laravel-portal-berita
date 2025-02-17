@@ -23,7 +23,7 @@
 				<a id="Author" href="{{ route('front.author', $articleNews->author->slug) }}" class="w-fit h-fit">
 					<div class="flex items-center gap-3">
 						<div class="w-10 h-10 rounded-full overflow-hidden">
-							<img src="{{ $articleNews->author->avatar }}" class="object-cover w-full h-full" alt="avatar">
+							<img src="{{ Storage::url($articleNews->author->avatar) }}" class="object-cover w-full h-full" alt="avatar">
 						</div>
 						<div class="flex flex-col">
 							<p class="font-semibold text-sm leading-[21px]">{{ $articleNews->author->name }}</p>
@@ -34,19 +34,19 @@
 				<div id="Rating" class="flex items-center gap-1">
 					<div class="flex items-center">
 						<div class="w-4 h-4 flex shrink-0">
-							<img src="assets/images/icons/Star 1.svg" alt="star">
+							<img src="{{ asset('assets/images/icons/Star 1.svg') }}" alt="star">
 						</div>
 						<div class="w-4 h-4 flex shrink-0">
-							<img src="assets/images/icons/Star 1.svg" alt="star">
+							<img src="{{ asset('assets/images/icons/Star 1.svg') }}" alt="star">
 						</div>
 						<div class="w-4 h-4 flex shrink-0">
-							<img src="assets/images/icons/Star 1.svg" alt="star">
+							<img src="{{ asset('assets/images/icons/Star 1.svg') }}" alt="star">
 						</div>
 						<div class="w-4 h-4 flex shrink-0">
-							<img src="assets/images/icons/Star 1.svg" alt="star">
+							<img src="{{ asset('assets/images/icons/Star 1.svg') }}" alt="star">
 						</div>
 						<div class="w-4 h-4 flex shrink-0">
-							<img src="assets/images/icons/Star 1.svg" alt="star">
+							<img src="{{ asset('assets/images/icons/Star 1.svg') }}" alt="star">
 						</div>
 					</div>
 					<p class="font-semibold text-xs leading-[18px]">(12,490)</p>
@@ -54,21 +54,21 @@
 			</div>
 		</div>
 		<div class="w-full h-[500px] flex shrink-0 overflow-hidden">
-			<img src="{{ $articleNews->thumbnail }}" class="object-cover w-full h-full" alt="cover thumbnail">
+			<img src="{{ Storage::url($articleNews->thumbnail) }}" class="object-cover w-full h-full" alt="cover thumbnail">
 		</div>
 	</header>
 	<section id="Article-container" class="max-w-[1130px] mx-auto flex gap-20 mt-[50px]">
 		<article id="Content-wrapper">
-			{{ !! $articleNews->content !! }}
+			{!! $articleNews->content !!}
 		</article>
 		<div class="side-bar flex flex-col w-[300px] shrink-0 gap-10">
 			<div class="ads flex flex-col gap-3 w-full">
 				<a href="{{ $bannerads_square_1->link }}">
-					<img src="{{ $bannerads_square_1->thumbnail }}" class="object-contain w-full h-full" alt="ads" />
+					<img src="{{ Storage::url($bannerads_square_1->thumbnail) }}" class="object-contain w-full h-full" alt="ads" />
 				</a>
 				<p class="font-medium text-sm leading-[21px] text-[#A3A6AE] flex gap-1">
 					Our Advertisement <a href="#" class="w-[18px] h-[18px]"><img
-							src="asset('assets/images/icons/message-question.svg')" alt="icon" /></a>
+							src="{{asset('assets/images/icons/message-question.svg')}}" alt="icon" /></a>
 				</p>
 			</div>
 			<div id="More-from-author" class="flex flex-col gap-4">
@@ -99,7 +99,7 @@
 				</a>
 				<p class="font-medium text-sm leading-[21px] text-[#A3A6AE] flex gap-1">
 					Our Advertisement <a href="#" class="w-[18px] h-[18px]"><img
-							src="asset('assets/images/icons/message-question.svg')" alt="icon" /></a>
+							src="{{ asset('assets/images/icons/message-question.svg') }}" alt="icon" /></a>
 				</p>
 			</div>
 		</div>
@@ -113,11 +113,11 @@
 			</a>
 			<p class="font-medium text-sm leading-[21px] text-[#A3A6AE] flex gap-1">
 				Our Advertisement <a href="#" class="w-[18px] h-[18px]"><img
-						src="assets/images/icons/message-question.svg" alt="icon" /></a>
+						src="{{ asset('assets/images/icons/message-question.svg') }}" alt="icon" /></a>
 			</p>
 		</div>
 	</section>
-	<section id="Up-to-date" class="w-full flex justify-center mt-[70px] py-[50px] bg-[#F9F9FC]">
+	<section id="Up-to-date" class="w-full flex justify-center mt-[70px] py-[50px] bg-[#eeeef7]">
 		<div class="max-w-[1130px] mx-auto flex flex-col gap-[30px]">
 			<div class="flex justify-between items-center">
 				<h2 class="font-bold text-[26px] leading-[39px]">
@@ -152,6 +152,7 @@
 			</div>
 		</div>
 	</section>
+	<x-footer />
 </body>
 
 @endsection

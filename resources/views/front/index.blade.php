@@ -1,20 +1,19 @@
 @extends('front.master')
 @section('content')
 	<body class="font-[Poppins] pb-[72px]">
-		<x-navbar />
+		<x-navbar />		
 		<nav id="Category" class="max-w-[1130px] mx-auto flex justify-center items-center gap-4 mt-[30px]">
 
-            @foreach ($categories as $category)
+			@foreach ($categories as $category)
 			<a href="{{ route('front.category', $category->slug) }}" 
-				class="relative rounded-full p-[12px_22px] flex gap-[10px] font-semibold transition-all duration-300 border border-[#EEF0F7] hover:ring-2 hover:ring-[#FF6B18] 
-					   after:content-[''] after:absolute after:left-1/2 after:bottom-[-14px] after:w-16 after:h-[2px] after:bg-[#FF6B18] after:-translate-x-1/2 after:transition-all after:duration-300 hover:after:w-0">
+				class="relative p-[12px_22px] flex gap-[10px] font-semibold transition-all duration-300 border border-[#EEF0F7] hover:ring-2 hover:ring-[#FF6B18] 
+					   after:content-[''] after:absolute after:left-1/2 after:bottom-[-14px] after:w-20 after:h-[2px] after:bg-[#FF6B18] after:-translate-x-1/2 after:transition-all after:duration-300 hover:after:w-0">
 				 <div class="w-6 h-6 flex shrink-0">
 					 <img src="{{ Storage::url($category->icon) }}" alt="icon" />
 				 </div>
 				 <span>{{ $category->name }}</span>
 			 </a>						   
-            @endforeach
-			
+			@endforeach		
 		</nav>
 		<section id="Featured" class="mt-[30px]">
 			<div class="main-carousel w-full">
@@ -268,7 +267,56 @@
 				</div>
 			</div>
 		</section>
-		
+
+		<section id="Latest-bisnis" class="max-w-[1130px] mx-auto flex flex-col gap-[30px] mt-[70px]">
+			<div class="flex justify-between items-center">
+				<h2 class="font-bold text-[26px] leading-[39px]">
+					Latest For You <br />
+					in bisnis
+				</h2>
+				<a href="categoryPage.html" class="rounded-full p-[12px_22px] flex gap-[10px] font-semibold transition-all duration-300 border border-[#EEF0F7] hover:ring-2 hover:ring-[#FF6B18]">Explore All</a>
+			</div>
+			<div class="flex justify-between items-center h-fit">
+
+				@if($bisnis_featured_articles)
+				<div class="featured-news-card relative w-full h-[424px] flex flex-1 rounded-[20px] overflow-hidden">
+					<img src="{{ Storage::url($bisnis_featured_articles->thumbnail) }}" class="thumbnail absolute w-full h-full object-cover" alt="icon" />
+					<div class="w-full h-full bg-gradient-to-b from-[rgba(0,0,0,0)] to-[rgba(0,0,0,0.9)] absolute z-10"></div>
+					<div class="card-detail w-full flex items-end p-[30px] relative z-20">
+						<div class="flex flex-col gap-[10px]">
+							<p class="text-white">Featured</p>
+							<a href="{{ route('front.details', $bisnis_featured_articles->slug) }}" class="font-bold text-[30px] leading-[36px] text-white hover:underline transition-all duration-300">{{ $bisnis_featured_articles->name }}</a>
+							<p class="text-white">{{ $bisnis_featured_articles->created_at->format('M d, Y') }}</p>
+						</div>
+					</div>
+				</div>
+				@else
+					<p>No featured bisnis article available.</p>
+				@endif
+				<div class="h-[424px] w-fit px-5 overflow-y-scroll overflow-x-hidden relative custom-scrollbar">
+
+					@forelse ($bisnis_articles as $article)
+					<div class="w-[455px] flex flex-col gap-5 shrink-0">
+						<a href="{{ route('front.details', $article->slug) }}" class="card py-[2px]">
+							<div class="rounded-[20px] border border-[#EEF0F7] p-[14px] flex items-center gap-4 hover:ring-2 hover:ring-[#FF6B18] transition-all duration-300">
+								<div class="w-[130px] h-[100px] flex shrink-0 rounded-[20px] overflow-hidden">
+									<img src="{{ Storage::url($article->thumbnail) }}" class="object-cover w-full h-full" alt="thumbnail" />
+								</div>
+								<div class="flex flex-col justify-center-center gap-[6px]">
+									<h3 class="font-bold text-lg leading-[27px]">{{ $article->name }}</h3>
+									<p class="text-sm leading-[21px] text-[#A3A6AE]">{{ $article->created_at->format('M d, Y') }}</p>
+								</div>
+							</div>
+						</a>
+					</div>
+					@empty
+					<p>Belum ada data..</p>
+					@endforelse
+					
+					<div class="sticky z-10 bottom-0 w-full h-[100px] bg-gradient-to-b from-[rgba(255,255,255,0.19)] to-[rgba(255,255,255,1)]"></div>
+				</div>
+			</div>
+		</section>
 		<x-footer />
 	</body>
 @endsection
@@ -282,4 +330,5 @@
 	<!-- JavaScript -->
 	<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 	<script src="{{ asset('customjs/carousel.js') }}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 @endpush

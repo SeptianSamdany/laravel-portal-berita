@@ -79,8 +79,70 @@ class FrontController extends Controller
         ->inrandomOrder()
         ->first();
 
+        $olaharaga_articles = ArticleNews::whereHas('category', function ($query) {
+            $query->where('name', 'Olahraga'); 
+        })
+        ->where('is_featured', 'not_featured')
+        ->latest()
+        ->take(6)
+        ->get();
+
+        $olahraga_featured_articles = ArticleNews::whereHas('category', function ($query) {
+            $query->where('name', 'Olahraga'); 
+        })
+        ->where('is_featured', 'featured')
+        ->inrandomOrder()
+        ->first();
+
+        $politik_articles = ArticleNews::whereHas('category', function ($query) {
+            $query->where('name', 'Politik'); 
+        })
+        ->where('is_featured', 'not_featured')
+        ->latest()
+        ->take(6)
+        ->get();
+
+        $politik_featured_articles = ArticleNews::whereHas('category', function ($query) {
+            $query->where('name', 'Politik'); 
+        })
+        ->where('is_featured', 'featured')
+        ->inrandomOrder()
+        ->first();
+
+        $pariwisata_articles = ArticleNews::whereHas('category', function ($query) {
+            $query->where('name', 'Pariwisata'); 
+        })
+        ->where('is_featured', 'not_featured')
+        ->latest()
+        ->take(6)
+        ->get();
+
+        $pariwisata_featured_articles = ArticleNews::whereHas('category', function ($query) {
+            $query->where('name', 'Pariwisata'); 
+        })
+        ->where('is_featured', 'featured')
+        ->inrandomOrder()
+        ->first();
+
+        $bisnis_articles = ArticleNews::whereHas('category', function ($query) {
+            $query->where('name', 'Bisnis'); 
+        })
+        ->where('is_featured', 'not_featured')
+        ->latest()
+        ->take(6)
+        ->get();
+
+        $bisnis_featured_articles = ArticleNews::whereHas('category', function ($query) {
+            $query->where('name', 'Bisnis'); 
+        })
+        ->where('is_featured', 'featured')
+        ->inrandomOrder()
+        ->first();
+
+        
+
         return view('front.index', compact('politik_featured_articles','politik_articles', 'categories', 'articles', 'authors', 
-        'featured_articles', 'bannerads', 'kesehatan_articles', 'kesehatan_featured_articles', 'teknologi_articles', 'teknologi_featured_articles')); 
+        'featured_articles', 'bannerads', 'kesehatan_articles', 'kesehatan_featured_articles', 'teknologi_articles', 'teknologi_featured_articles', 'olaharaga_articles', 'olahraga_featured_articles', 'pariwisata_articles', 'pariwisata_featured_articles', 'bisnis_articles', 'bisnis_featured_articles')); 
     }
 
     public function category(Category $category)
@@ -134,11 +196,6 @@ class FrontController extends Controller
         ->latest()
         ->take(3)
         ->get();
-
-        $bannerads = BannerAdvertisement::where('is_active', 'active')
-        ->where('type', 'banner')
-        ->inRandomOrder()
-        ->first();
 
         $bannerads = BannerAdvertisement::where('is_active', 'active')
         ->where('type', 'banner')

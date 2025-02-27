@@ -5,7 +5,7 @@
         </a>
         <div class="h-12 border border-[#E8EBF4]"></div>
         <form action="{{ route('front.search') }}" method="GET"
-            class="w-[450px] flex items-center rounded-full border border-[#E8EBF4] p-[12px_20px] gap-[10px] focus-within:ring-2 focus-within:ring-[#FF6B18] transition-all duration-300">
+            class="w-[600px] flex items-center rounded-full border border-[#E8EBF4] p-[12px_20px] gap-[10px] focus-within:ring-2 focus-within:ring-[#FF6B18] transition-all duration-300 shadow-lg">
             @csrf
             <button type="submit" class="w-5 h-5 flex shrink-0">
                 <img src="{{asset('assets//images/icons/search-normal.svg')}}" alt="icon" />
